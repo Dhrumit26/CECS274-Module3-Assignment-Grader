@@ -1,0 +1,84 @@
+
+import json
+import traceback
+import os
+
+class TestOutput:
+    def __init__(self, passed, logs):
+        assert (isinstance(passed, bool))
+        assert (isinstance(logs, str))
+        self.passed = passed
+        self.logs = logs
+
+try:
+    # To call a student's method, uncomment the following line and call <fileName>.<method>
+    
+    # import <insert student's fileName here>
+    import SLLQueueCP
+    import SLLQueue
+    import random
+    
+    def TestCase():
+      try:
+        test_input = [chr(random.randint(97, 107)) for j in range(5)]
+        msg = f"Creating SLLQueue object 'sll_queue'..."
+        answer_q = SLLQueueCP.SLLQueue()
+        student_q = SLLQueue.SLLQueue()
+      
+       
+        for i in range(len(test_input)):
+          letter = test_input[i]
+          answer_q.add(letter)
+          student_q.add(letter)
+          msg += f"\n\nCalled sll_queue.add('{letter}')\n\tExpected queue: {answer_q}\t\tSize: {answer_q.size()}\n\tReceived queue: {student_q}\t\tSize: {student_q.size()}"
+          
+          #Comparing the original queue contents
+          expected_str = str(answer_q)
+          received_str = str(student_q)
+          
+          if expected_str != received_str or answer_q.size() != student_q.size():
+            msg += "\n\nTest FAILED."
+            return TestOutput(passed=False, logs=msg)
+          
+      # Reversing the queue
+        msg += '\n' + '-'*70
+        answer_q.reverse()
+        student_q.reverse()
+        msg += f"\nCalled sll_queue.reverse()\n\tExpected queue: {answer_q}\t\tSize: {answer_q.size()}\n\tReceived queue: {student_q}\t\tSize: {student_q.size()}"
+        msg += '\n' + '-'*70
+        
+        #Comparing the original queue contents
+        expected_str = str(answer_q)
+        received_str = str(student_q)
+          
+        if expected_str != received_str or answer_q.size() != student_q.size():
+            msg += "\n\nTest FAILED."
+            return TestOutput(passed=False, logs=msg)
+    
+    
+        while answer_q.size() > 0:
+          expected = answer_q.remove()
+          received = student_q.remove()
+          expected_str = str(answer_q)
+          received_str = str(student_q)
+          msg += f"\n\nCalled sll_q.remove()\n\tExpected element: {expected}\n\tReceived element: {received}\n\tExpected queue: {expected_str}\t\tSize: {answer_q.size()}\n\tReceived queue: {received_str}\t\tSize: {student_q.size()}"
+          
+          if expected_str != received_str or expected != received:
+            msg += "\n\nTest FAILED."
+            return TestOutput(passed=False, logs=msg)
+    
+        msg += "\nTest PASSED." 
+        return TestOutput(passed=True, logs=msg)
+    
+      except Exception as e:
+        msg += f"\n\nThe following unexpected error occurred:\n{e}"
+        return TestOutput(passed=False, logs=msg)
+        
+    output = TestCase()
+    assert(isinstance(output, TestOutput))
+except Exception as e:
+    errorLogs = traceback.format_exc()
+    output = TestOutput(False, str(errorLogs))
+f = open("/outputs/146282.json", "w")
+json.dump({"id": "146282", "passed": output.passed, "log": output.logs}, f)
+f.close()
