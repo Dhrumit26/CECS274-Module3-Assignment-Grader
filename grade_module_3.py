@@ -18,9 +18,9 @@ DEFAULT_SUPPORT_DIR = "tests/m3"
 DEFAULT_OUTPUT_DIR = "tests/m3"
 DEFAULT_TESTS_DIR = "tests/m3"
 OUTPUT_DIR = "tests/m3"
-DEFAULT_RESULTS_CSV = "newm3_code_results.csv"
-DEFAULT_SUMMARY_CSV = "newm3_code_summary.csv"
-DEFAULT_LOG_FILE = "newm3_grading_log.txt"
+DEFAULT_RESULTS_CSV = "m3_code_results.csv"
+DEFAULT_SUMMARY_CSV = "m3_code_summary.csv"
+DEFAULT_LOG_FILE = "m3_grading_log.txt"
 DEFAULT_TIMEOUT = 300  # seconds per test (hard stop)
 # Provide the exact filenames expected from each student:
 TARGET_FILENAMES = {
@@ -33,7 +33,7 @@ class ConsoleLogger:
     def __init__(self, log_file_path: str):
         self.log_file = open(log_file_path, 'w', encoding='utf-8')
         self.start_time = datetime.now()
-        self.log(f"=== MA2 Grading Started at {self.start_time.strftime('%Y-%m-%d %H:%M:%S')} ===")
+        self.log(f"=== Module 3 Grading Started at {self.start_time.strftime('%Y-%m-%d %H:%M:%S')} ===")
     
     def log(self, message: str):
         timestamp = datetime.now().strftime('%H:%M:%S')
@@ -59,7 +59,7 @@ class ConsoleLogger:
     def close(self):
         end_time = datetime.now()
         duration = end_time - self.start_time
-        self.log(f"=== MA2 Grading Completed at {end_time.strftime('%Y-%m-%d %H:%M:%S')} (Duration: {duration}) ===")
+        self.log(f"=== Module 3 Grading Completed at {end_time.strftime('%Y-%m-%d %H:%M:%S')} (Duration: {duration}) ===")
         self.log_file.close()
 
 def find_tests(tests_dir: pathlib.Path) -> List[pathlib.Path]:
